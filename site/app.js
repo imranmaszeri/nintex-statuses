@@ -169,6 +169,22 @@ const formatDuration = (minutes) => {
 
 const countsAsDowntime = (impact) => impact === 'minor' || impact === 'major';
 
+// Resolve the [start, end] interval for a Status.io incident object.
+// Prefers overlap_start/overlap_end; falls back to datetime_open + duration (minutes).
+const incidentInterval = (incident) => {
+  if (incident.overlap_start && incident.overlap_end) {
+    const start = new Date(incident.overlap_start);
+    const end = new Date(incident.overlap_end);
+    if (!Number.isNaN(start) && !Number.isNaN(end) && end > start) return [start, end];
+  }
+  if (incident.datetime_open && incident.duration) {
+    const start = new Date(incident.datetime_open);
+    const durationMs = Number(incident.duration) * 60 * 1000;
+    if (!Number.isNaN(start) && durationMs > 0) return [start, new Date(start.getTime() + durationMs)];
+  }
+  return null;
+};
+
 const formatIncidentCount = (count) => `${count} incident${count === 1 ? '' : 's'}`;
 const shouldUseAlternateStatusMeta = () =>
   statusMetaVariant !== 'default' && STATUS_META_MOBILE_QUERY.matches;
@@ -693,25 +709,20 @@ const render = async () => {
         const id = incident.id || incident.name;
         if (!id) return;
         const existing = platformDayIncidents[index].get(id);
+        const iv = incidentInterval(incident);
         if (!existing || rank > (impactRank[existing.impact] ?? 0)) {
           platformDayIncidents[index].set(id, {
             id,
             title: incident.name || id,
             impact,
-            overlap_start: incident.overlap_start,
-            overlap_end: incident.overlap_end,
-            datetime_open: incident.datetime_open,
-            duration: incident.duration,
-            url: `https://nintex.status.io/incidents/${id}`,
+            overlap_start: iv ? iv[0].toISOString() : incident.overlap_start,
+            overlap_end: iv ? iv[1].toISOString() : incident.overlap_end,
+            url: `https://nintex.status.io/pages/incident/566925105401bb333d000014/${id}`,
           });
         }
         // Collect downtime intervals for platform uptime
-        if (countsAsDowntime(impact) && incident.overlap_start && incident.overlap_end) {
-          const start = new Date(incident.overlap_start);
-          const end = new Date(incident.overlap_end);
-          if (!Number.isNaN(start) && !Number.isNaN(end) && end > start) {
-            platformIntervals.push([start, end]);
-          }
+        if (countsAsDowntime(impact) && iv) {
+          platformIntervals.push(iv);
         }
       });
     });
@@ -913,22 +924,19 @@ const render = async () => {
         const id = incident.id || incident.name;
         if (!id) return;
         const existing = dayIncidents[index].get(id);
+        const iv = incidentInterval(incident);
         if (!existing || rank > (impactRank[existing.impact] ?? 0)) {
           dayIncidents[index].set(id, {
             id,
             title: incident.name || id,
             impact,
-            overlap_start: incident.overlap_start,
-            overlap_end: incident.overlap_end,
-            url: `https://nintex.status.io/incidents/${id}`,
+            overlap_start: iv ? iv[0].toISOString() : incident.overlap_start,
+            overlap_end: iv ? iv[1].toISOString() : incident.overlap_end,
+            url: `https://nintex.status.io/pages/incident/566925105401bb333d000014/${id}`,
           });
         }
-        if (countsAsDowntime(impact) && incident.overlap_start && incident.overlap_end) {
-          const start = new Date(incident.overlap_start);
-          const end = new Date(incident.overlap_end);
-          if (!Number.isNaN(start) && !Number.isNaN(end) && end > start) {
-            intervals.push([start, end]);
-          }
+        if (countsAsDowntime(impact) && iv) {
+          intervals.push(iv);
         }
       });
     });
@@ -979,17 +987,16 @@ const render = async () => {
       const impact = statusToImpact(day.status);
       (day.incidents || []).forEach((incident) => {
         const id = incident.id || incident.name;
-        if (!incident.overlap_start || !incident.overlap_end) return;
-        const start = new Date(incident.overlap_start);
-        const end = new Date(incident.overlap_end);
-        if (Number.isNaN(start) || Number.isNaN(end) || end <= start) return;
+        const iv = incidentInterval(incident);
+        if (!iv) return;
+        const [start, end] = iv;
         windowEntries.push({
           id,
           title: incident.name || id,
           impact,
           start,
           end,
-          url: `https://nintex.status.io/incidents/${id}`,
+          url: `https://nintex.status.io/pages/incident/566925105401bb333d000014/${id}`,
         });
       });
     });
@@ -1173,7 +1180,7 @@ const render = async () => {
           impact,
           datetime_open: incident.datetime_open,
           duration: incident.duration,
-          url: `https://nintex.status.io/incidents/${id}`,
+          url: `https://nintex.status.io/pages/incident/566925105401bb333d000014/${id}`,
         });
       });
     });
