@@ -4,7 +4,7 @@ import requests
 from datetime import datetime, timezone
 
 PAGE_ID = "566925105401bb333d000014"
-BASE = "https://nintex.status.io"
+BASE = "https://status.nintex.com"
 
 COMPONENTS = [
     {"id": "66e9bb3e7c63fe64a2877580", "name": "Nintex Licensing and Permitting"},
@@ -38,33 +38,24 @@ COMPONENTS = [
 
 
 def fetch():
+    url = f"{BASE}/1.0/status/{PAGE_ID}"
+    resp = requests.get(url, timeout=15)
+    resp.raise_for_status()
+    data = resp.json()["result"]
+
     result = {
         "fetched_at": datetime.now(timezone.utc).isoformat(),
-        "components": [],
+        "status_overall": data.get("status_overall"),
+        "components": data.get("status", []),        # includes containers per component
+        "incidents": data.get("incidents", []),       # active incidents
+        "maintenance": data.get("maintenance", {}),   # active + upcoming
     }
-    for c in COMPONENTS:
-        url = f"{BASE}/pages/{PAGE_ID}/status_chart/component/{c['id']}/uptime"
-        try:
-            resp = requests.get(url, timeout=15)
-            resp.raise_for_status()
-            data = resp.json()
-        except Exception as e:
-            print(f"Warning: failed to fetch {c['name']}: {e}")
-            data = {}
-        result["components"].append(
-            {
-                "id": c["id"],
-                "name": c["name"],
-                "uptime_percentage": data.get("uptime_percentage"),
-                "days": data.get("days", []),
-            }
-        )
-        time.sleep(0.2)
 
     with open("data/nintex-uptime.json", "w") as f:
-        json.dump(result, f)
+        json.dump(result, f, indent=2)
 
-    print(f"Fetched {len(result['components'])} components at {result['fetched_at']}")
-
+    print(f"Fetched at {result['fetched_at']}")
+    print(f"  Components: {len(result['components'])}")
+    print(f"  Active incidents: {len(result['incidents'])}")
 
 fetch()

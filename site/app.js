@@ -541,7 +541,7 @@ const renderShareImageCanvas = () => {
     legendX += ctx.measureText(label).width + 62;
   });
 
-  const attribution = 'nintex.status.io';
+  const attribution = 'status.nintex.com';
   ctx.fillStyle = '#57606a';
   ctx.font = '600 24px "IBM Plex Sans", system-ui, sans-serif';
   const attributionWidth = ctx.measureText(attribution).width;
@@ -664,10 +664,12 @@ const addMonthsUTC = (date, delta) =>
 const daysInMonthUTC = (date) =>
   new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + 1, 0)).getUTCDate();
 
-// Extract unique incidents from a component's days array, deduplicating by id.
+// Extract unique incidents from a component's days array and incidents array, deduplicating by id.
 // Returns a Map<id, { id, name, datetime_open, duration, overlap_start, overlap_end, impact }>
 const extractIncidents = (component, rangeStart, rangeEnd) => {
   const seen = new Map();
+  
+  // Extract from days array (if present)
   (component.days || []).forEach((day) => {
     (day.incidents || []).forEach((incident) => {
       const id = incident.id || incident.name;
@@ -678,12 +680,26 @@ const extractIncidents = (component, rangeStart, rangeEnd) => {
       }
     });
   });
+  
+  // Extract from component.incidents array (from API)
+  (component.incidents || []).forEach((incident) => {
+    const id = incident.id;
+    if (!id) return;
+    // Determine impact from the incident status
+    const impact = incident.impact || 'none';
+    if (!seen.has(id) || impactRank[impact] > impactRank[seen.get(id).impact]) {
+      seen.set(id, { ...incident, impact });
+    }
+  });
+  
   return seen;
 };
 
 // Build per-component incident intervals (minute-level) for uptime calculation
 const componentIntervals = (component) => {
   const intervals = [];
+  
+  // Extract from days array (if present)
   (component.days || []).forEach((day) => {
     const impact = statusToImpact(day.status);
     if (!countsAsDowntime(impact)) return;
@@ -697,6 +713,17 @@ const componentIntervals = (component) => {
       }
     });
   });
+  
+  // Extract from component.incidents array (from API)
+  (component.incidents || []).forEach((incident) => {
+    const impact = incident.impact || 'none';
+    if (!countsAsDowntime(impact)) return;
+    const interval = incidentInterval(incident);
+    if (interval) {
+      intervals.push(interval);
+    }
+  });
+  
   return intervals;
 };
 
@@ -762,7 +789,7 @@ const render = async () => {
             impact,
             overlap_start: iv ? iv[0].toISOString() : incident.overlap_start,
             overlap_end: iv ? iv[1].toISOString() : incident.overlap_end,
-            url: `https://nintex.status.io/pages/incident/566925105401bb333d000014/${id}`,
+            url: `https://status.nintex.com/incidents/${id}`,
           });
         }
         // Collect downtime intervals for platform uptime
@@ -770,6 +797,44 @@ const render = async () => {
           platformIntervals.push(iv);
         }
       });
+    });
+    
+    // Also process incidents from the component.incidents array (from API)
+    (component.incidents || []).forEach((incident) => {
+      const id = incident.id;
+      if (!id) return;
+      const impact = incident.impact || 'none';
+      const iv = incidentInterval(incident);
+      if (!iv) return;
+      
+      // Determine which day(s) this incident affects
+      const dayStart = getDayStartUTC(iv[0]);
+      const dayEnd = getDayStartUTC(new Date(iv[1].getTime() + 86400000)); // next day
+      
+      for (let d = new Date(dayStart); d < dayEnd; d.setUTCDate(d.getUTCDate() + 1)) {
+        const barIndex = Math.round((d.getTime() - rangeStart.getTime()) / 86400000);
+        if (barIndex < 0 || barIndex >= 90) continue;
+        
+        const rank = impactRank[impact] ?? 0;
+        platformDaySeverity[barIndex] = Math.max(platformDaySeverity[barIndex], rank);
+        
+        const existing = platformDayIncidents[barIndex].get(id);
+        if (!existing || rank > (impactRank[existing.impact] ?? 0)) {
+          platformDayIncidents[barIndex].set(id, {
+            id,
+            title: incident.name || incident.title || id,
+            impact,
+            overlap_start: iv[0].toISOString(),
+            overlap_end: iv[1].toISOString(),
+            url: `https://status.nintex.com/incidents/${id}`,
+          });
+        }
+      }
+      
+      // Collect downtime intervals for platform uptime
+      if (countsAsDowntime(impact)) {
+        platformIntervals.push(iv);
+      }
     });
   });
 
@@ -978,13 +1043,50 @@ const render = async () => {
             impact,
             overlap_start: iv ? iv[0].toISOString() : incident.overlap_start,
             overlap_end: iv ? iv[1].toISOString() : incident.overlap_end,
-            url: `https://nintex.status.io/pages/incident/566925105401bb333d000014/${id}`,
+            url: `https://status.nintex.com/incidents/${id}`,
           });
         }
         if (countsAsDowntime(impact) && iv) {
           intervals.push(iv);
         }
       });
+    });
+    
+    // Also process incidents from component.incidents array (from API)
+    (component.incidents || []).forEach((incident) => {
+      const id = incident.id;
+      if (!id) return;
+      const impact = incident.impact || 'none';
+      const iv = incidentInterval(incident);
+      if (!iv) return;
+      
+      // Determine which day(s) this incident affects
+      const dayStart = getDayStartUTC(iv[0]);
+      const dayEnd = getDayStartUTC(new Date(iv[1].getTime() + 86400000)); // next day
+      
+      for (let d = new Date(dayStart); d < dayEnd; d.setUTCDate(d.getUTCDate() + 1)) {
+        const barIndex = Math.round((d.getTime() - rangeStart.getTime()) / 86400000);
+        if (barIndex < 0 || barIndex >= 90) continue;
+        
+        const rank = impactRank[impact] ?? 0;
+        daySeverity[barIndex] = Math.max(daySeverity[barIndex], rank);
+        
+        const existing = dayIncidents[barIndex].get(id);
+        if (!existing || rank > (impactRank[existing.impact] ?? 0)) {
+          dayIncidents[barIndex].set(id, {
+            id,
+            title: incident.name || incident.title || id,
+            impact,
+            overlap_start: iv[0].toISOString(),
+            overlap_end: iv[1].toISOString(),
+            url: `https://status.nintex.com/incidents/${id}`,
+          });
+        }
+      }
+      
+      if (countsAsDowntime(impact)) {
+        intervals.push(iv);
+      }
     });
 
     const merged = mergeIntervals(intervals);
@@ -1042,7 +1144,7 @@ const render = async () => {
           impact,
           start,
           end,
-          url: `https://nintex.status.io/pages/incident/566925105401bb333d000014/${id}`,
+          url: `https://status.nintex.com/incidents/${id}`,
         });
       });
     });
@@ -1226,7 +1328,7 @@ const render = async () => {
           impact,
           datetime_open: incident.datetime_open,
           duration: incident.duration,
-          url: `https://nintex.status.io/pages/incident/566925105401bb333d000014/${id}`,
+          url: `https://status.nintex.com/incidents/${id}`,
         });
       });
     });

@@ -1,6 +1,6 @@
 # nintex-statuses
 
-90-day uptime tracker for all 27 Nintex platform services, sourced directly from the [nintex.status.io](https://nintex.status.io) Status.io API.
+90-day uptime tracker for all 27 Nintex platform services, sourced directly from the [status.nintex.com](https://status.nintex.com) Status.io API.
 
 ## How it works
 
@@ -10,7 +10,7 @@ Unlike Atom-feed-based trackers, Status.io exposes a structured per-component en
 
 ## Data source
 
-- **API**: `https://nintex.status.io/pages/566925105401bb333d000014/status_chart/component/{id}/uptime`
+- **API**: `https://status.nintex.com/pages/566925105401bb333d000014/status_chart/component/{id}/uptime`
 - **Components**: 27 Nintex services
 - **Coverage**: 90 days of daily status + incident data per component
 
