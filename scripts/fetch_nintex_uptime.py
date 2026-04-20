@@ -43,12 +43,29 @@ def fetch():
     resp.raise_for_status()
     data = resp.json()["result"]
 
+    components = data.get("status", [])
+    
+    # Fetch uptime data for each component
+    for component in components:
+        component_id = component["id"]
+        uptime_url = f"{BASE}/pages/{PAGE_ID}/status_chart/component/{component_id}/uptime"
+        try:
+            uptime_resp = requests.get(uptime_url, timeout=15)
+            uptime_resp.raise_for_status()
+            uptime_data = uptime_resp.json()
+            component["days"] = uptime_data.get("days", [])
+            component["uptime_percentage"] = uptime_data.get("uptime_percentage", 100)
+        except Exception as e:
+            print(f"Failed to fetch uptime for {component['name']}: {e}")
+            component["days"] = []
+            component["uptime_percentage"] = 100
+
     result = {
         "fetched_at": datetime.now(timezone.utc).isoformat(),
         "status_overall": data.get("status_overall"),
-        "components": data.get("status", []),        # includes containers per component
-        "incidents": data.get("incidents", []),       # active incidents
-        "maintenance": data.get("maintenance", {}),   # active + upcoming
+        "components": components,
+        "incidents": data.get("incidents", []),
+        "maintenance": data.get("maintenance", {}),
     }
 
     with open("data/nintex-uptime.json", "w") as f:
