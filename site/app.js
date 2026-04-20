@@ -741,27 +741,6 @@ const render = async () => {
   const rangeEnd = new Date(today);
   rangeEnd.setUTCDate(rangeEnd.getUTCDate() + 1);
 
-  // Parse the API's day.date string "27 Jan 2026" → UTC Date
-  const API_MONTHS = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
-  const parseApiDate = (str) => {
-    if (!str) return null;
-    const parts = String(str).trim().split(' ');
-    if (parts.length !== 3) return null;
-    const day = parseInt(parts[0], 10);
-    const month = API_MONTHS[parts[1]];
-    const year = parseInt(parts[2], 10);
-    if (Number.isNaN(day) || month === undefined || Number.isNaN(year)) return null;
-    return new Date(Date.UTC(year, month, day));
-  };
-
-  // Convert an API day entry to the correct bar index (0 = rangeStart, 89 = today)
-  // by matching the day's actual date rather than its array position.
-  const dayBarIndex = (day) => {
-    const dayDate = parseApiDate(day.date);
-    if (!dayDate) return -1;
-    return Math.round((dayDate.getTime() - rangeStart.getTime()) / 86400000);
-  };
-
   // Build 90-day platform severity (worst status per day across all components)
   const platformDaySeverity = new Array(90).fill(0);
   const platformDayIncidents = Array.from({ length: 90 }, () => new Map());
@@ -770,20 +749,20 @@ const render = async () => {
   const platformIntervals = [];
 
   components.forEach((component) => {
-    (component.days || []).forEach((day) => {
-      const barIndex = dayBarIndex(day);
-      if (barIndex < 0 || barIndex >= 90) return;
+    const days = component.days || [];
+    days.forEach((day, index) => {
+      if (index >= 90) return;
       const impact = statusToImpact(day.status);
       const rank = impactRank[impact] ?? 0;
-      platformDaySeverity[barIndex] = Math.max(platformDaySeverity[barIndex], rank);
+      platformDaySeverity[index] = Math.max(platformDaySeverity[index], rank);
 
       (day.incidents || []).forEach((incident) => {
         const id = incident.id || incident.name;
         if (!id) return;
-        const existing = platformDayIncidents[barIndex].get(id);
+        const existing = platformDayIncidents[index].get(id);
         const iv = incidentInterval(incident);
         if (!existing || rank > (impactRank[existing.impact] ?? 0)) {
-          platformDayIncidents[barIndex].set(id, {
+          platformDayIncidents[index].set(id, {
             id,
             title: incident.name || id,
             impact,
@@ -1024,20 +1003,19 @@ const render = async () => {
     const dayIncidents = Array.from({ length: 90 }, () => new Map());
     const intervals = [];
 
-    days.forEach((day) => {
-      const barIndex = dayBarIndex(day);
-      if (barIndex < 0 || barIndex >= 90) return;
+    days.forEach((day, index) => {
+      if (index >= 90) return;
       const impact = statusToImpact(day.status);
       const rank = impactRank[impact] ?? 0;
-      daySeverity[barIndex] = rank;
+      daySeverity[index] = rank;
 
       (day.incidents || []).forEach((incident) => {
         const id = incident.id || incident.name;
         if (!id) return;
-        const existing = dayIncidents[barIndex].get(id);
+        const existing = dayIncidents[index].get(id);
         const iv = incidentInterval(incident);
         if (!existing || rank > (impactRank[existing.impact] ?? 0)) {
-          dayIncidents[barIndex].set(id, {
+          dayIncidents[index].set(id, {
             id,
             title: incident.name || id,
             impact,
@@ -1131,7 +1109,7 @@ const render = async () => {
   // Build a flat list of all window entries for the history section
   const windowEntries = [];
   components.forEach((component) => {
-    (component.days || []).forEach((day) => {
+    (component.days || []).forEach((day, index) => {
       const impact = statusToImpact(day.status);
       (day.incidents || []).forEach((incident) => {
         const id = incident.id || incident.name;
