@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-06-04T08:47:15.332791+00:00",
+  "fetched_at": "2026-06-05T08:42:51.342335+00:00",
   "status_overall": {
     "updated": "2026-06-04T02:53:23.402Z",
     "status": "Operational",
@@ -64,13 +64,6 @@
       ],
       "updated": "2026-06-04T02:53:23.401Z",
       "days": [
-        {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "08 Mar 2026",
           "status": 100,
@@ -756,6 +749,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 92.2
@@ -797,13 +797,6 @@
       ],
       "updated": "2026-05-04T19:45:14.049Z",
       "days": [
-        {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "08 Mar 2026",
           "status": 100,
@@ -1453,6 +1446,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 96.7
@@ -1473,13 +1473,6 @@
       ],
       "updated": "2026-03-24T14:41:12.112Z",
       "days": [
-        {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "08 Mar 2026",
           "status": 100,
@@ -2102,6 +2095,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 100.0
@@ -2136,13 +2136,6 @@
       ],
       "updated": "2026-05-22T03:32:52.964Z",
       "days": [
-        {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "08 Mar 2026",
           "status": 100,
@@ -2792,6 +2785,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 96.7
@@ -2820,13 +2820,6 @@
       "updated": "2025-07-29T22:12:31.638Z",
       "days": [
         {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "08 Mar 2026",
           "status": 100,
           "incidents": [],
@@ -3444,6 +3437,13 @@
         },
         {
           "date": "04 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -3469,13 +3469,6 @@
       "updated": "2025-04-18T01:12:27.981Z",
       "days": [
         {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "08 Mar 2026",
           "status": 100,
           "incidents": [],
@@ -4093,6 +4086,13 @@
         },
         {
           "date": "04 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -4139,13 +4139,6 @@
       "updated": "2026-05-07T00:33:44.124Z",
       "days": [
         {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "08 Mar 2026",
           "status": 100,
           "incidents": [],
@@ -4763,6 +4756,13 @@
         },
         {
           "date": "04 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -4788,13 +4788,6 @@
       "updated": "2025-07-21T01:07:02.757Z",
       "days": [
         {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "08 Mar 2026",
           "status": 100,
           "incidents": [],
@@ -5412,6 +5405,13 @@
         },
         {
           "date": "04 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -5486,13 +5486,6 @@
       "updated": "2025-10-30T02:45:40.916Z",
       "days": [
         {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "08 Mar 2026",
           "status": 100,
           "incidents": [],
@@ -6114,6 +6107,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 100.0
@@ -6134,13 +6134,6 @@
       ],
       "updated": "2026-05-13T20:32:04.631Z",
       "days": [
-        {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "08 Mar 2026",
           "status": 100,
@@ -6772,6 +6765,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 98.9
@@ -6792,13 +6792,6 @@
       ],
       "updated": "2023-12-20T02:48:18.007Z",
       "days": [
-        {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "08 Mar 2026",
           "status": 100,
@@ -7417,6 +7410,13 @@
         },
         {
           "date": "04 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -7470,13 +7470,6 @@
       "updated": "2026-04-28T11:27:18.217Z",
       "days": [
         {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "08 Mar 2026",
           "status": 100,
           "incidents": [],
@@ -8094,6 +8087,13 @@
         },
         {
           "date": "04 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -8119,13 +8119,6 @@
       "updated": "2026-05-28T23:09:08.409Z",
       "days": [
         {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "08 Mar 2026",
           "status": 100,
           "incidents": [],
@@ -8743,6 +8736,13 @@
         },
         {
           "date": "04 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -8768,13 +8768,6 @@
       "updated": "2025-10-30T00:57:58.179Z",
       "days": [
         {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "08 Mar 2026",
           "status": 100,
           "incidents": [],
@@ -9392,6 +9385,13 @@
         },
         {
           "date": "04 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -9431,13 +9431,6 @@
       "updated": "2025-10-30T00:57:58.359Z",
       "days": [
         {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "08 Mar 2026",
           "status": 100,
           "incidents": [],
@@ -10055,6 +10048,13 @@
         },
         {
           "date": "04 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -10080,13 +10080,6 @@
       "updated": "2025-03-05T05:26:55.683Z",
       "days": [
         {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "08 Mar 2026",
           "status": 100,
           "incidents": [],
@@ -10708,6 +10701,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 100.0
@@ -10728,13 +10728,6 @@
       ],
       "updated": "2026-04-21T22:24:11.170Z",
       "days": [
-        {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "08 Mar 2026",
           "status": 100,
@@ -11366,6 +11359,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 98.9
@@ -11386,13 +11386,6 @@
       ],
       "updated": "2021-04-20T22:29:14.708Z",
       "days": [
-        {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "08 Mar 2026",
           "status": 100,
@@ -12011,6 +12004,13 @@
         },
         {
           "date": "04 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -12057,13 +12057,6 @@
       "updated": "2026-05-21T12:00:17.167Z",
       "days": [
         {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "08 Mar 2026",
           "status": 100,
           "incidents": [],
@@ -12681,6 +12674,13 @@
         },
         {
           "date": "04 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -12727,13 +12727,6 @@
       "updated": "2024-01-10T06:14:24.525Z",
       "days": [
         {
-          "date": "07 Mar 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "08 Mar 2026",
           "status": 100,
           "incidents": [],
@@ -13351,6 +13344,13 @@
         },
         {
           "date": "04 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "05 Jun 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
