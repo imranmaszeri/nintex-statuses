@@ -250,7 +250,7 @@ const renderStatusMeta = (lastUpdated, recentIncidentCount) => {
 
   if (!shouldUseAlternateStatusMeta()) {
     lastUpdatedEl.textContent = `Last updated ${dateText}`;
-    incidentCountEl.textContent = `${incidentText} in last 90 days`;
+    incidentCountEl.textContent = `${incidentText} (mapped components, 90 days)`;
     lastUpdatedEl.removeAttribute('aria-label');
     incidentCountEl.removeAttribute('aria-label');
     return;
@@ -259,7 +259,7 @@ const renderStatusMeta = (lastUpdated, recentIncidentCount) => {
   switch (statusMetaVariant) {
     case 'stacked':
       setStatusMetaItem(lastUpdatedEl, 'Updated', dateText);
-      setStatusMetaItem(incidentCountEl, 'Incidents', `${recentIncidentCount} in last 90 days`);
+      setStatusMetaItem(incidentCountEl, 'Incidents', `${recentIncidentCount} mapped in 90 days`);
       break;
     case 'cards':
       setStatusMetaItem(lastUpdatedEl, 'Last updated', dateText);
@@ -271,9 +271,36 @@ const renderStatusMeta = (lastUpdated, recentIncidentCount) => {
       break;
     default:
       lastUpdatedEl.textContent = `Last updated ${dateText}`;
-      incidentCountEl.textContent = `${incidentText} in last 90 days`;
+      incidentCountEl.textContent = `${incidentText} (mapped components, 90 days)`;
       break;
   }
+};
+
+const renderDiagnosticsNotice = (diagnostics) => {
+  const notice = document.getElementById('diagnosticsNotice');
+  if (!notice) return;
+
+  const stats = diagnostics?.incident_processing || {};
+  const noComponents = Number(stats.skipped_no_components || 0);
+  const unmatched = Number(stats.skipped_unmatched_components || 0);
+  const noTimeline = Number(stats.skipped_no_timeline || 0);
+  const scrapeWarnings = Array.isArray(diagnostics?.scrape_warnings) ? diagnostics.scrape_warnings.length : 0;
+
+  const skippedTotal = noComponents + unmatched + noTimeline;
+  if (skippedTotal === 0 && scrapeWarnings === 0) {
+    notice.hidden = true;
+    notice.textContent = '';
+    return;
+  }
+
+  const reasons = [];
+  if (noComponents > 0) reasons.push(`${noComponents} with no components`);
+  if (unmatched > 0) reasons.push(`${unmatched} with unmatched components`);
+  if (noTimeline > 0) reasons.push(`${noTimeline} with no timeline`);
+  const reasonText = reasons.length ? reasons.join(', ') : 'none';
+
+  notice.hidden = false;
+  notice.textContent = `Excluded incidents: ${skippedTotal} (${reasonText}).${scrapeWarnings > 0 ? ` Scrape warnings: ${scrapeWarnings}.` : ''}`;
 };
 
 const rerenderStatusMeta = () => {
@@ -741,6 +768,7 @@ const render = async () => {
 
   const fetchedAt = data.fetched_at ? new Date(data.fetched_at) : new Date();
   const components = data.components || [];
+  const diagnostics = data.diagnostics || {};
 
   const now = new Date();
   const today = getDayStartUTC(now);
@@ -992,6 +1020,7 @@ const render = async () => {
   const recentIncidentCount = allIncidentIds.size;
 
   renderStatusMeta(fetchedAt, recentIncidentCount);
+  renderDiagnosticsNotice(diagnostics);
   shareState.lastUpdated = fetchedAt;
   shareState.recentIncidentCount = recentIncidentCount;
   shareState.uptime = uptime;

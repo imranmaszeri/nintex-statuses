@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-06-30T08:29:39.266729+00:00",
+  "fetched_at": "2026-07-01T01:20:49.173486+00:00",
   "status_overall": {
-    "updated": "2026-06-30T08:25:34.915Z",
-    "status": "Service Disruption",
-    "status_code": 500
+    "updated": "2026-06-30T23:01:43.387Z",
+    "status": "Planned Maintenance",
+    "status_code": 200
   },
   "components": [
     {
@@ -65,22 +65,6 @@
       "updated": "2026-06-28T23:29:27.343Z",
       "days": [
         {
-          "date": "02 Apr 2026",
-          "status": 400,
-          "incidents": [
-            {
-              "id": "69ceadb1db45f805977e0450",
-              "name": "Delay in displaying events in the Workflow Instance Details",
-              "status": 400,
-              "datetime_open": "2026-04-02T17:56:00+00:00",
-              "overlap_start": "2026-04-02T17:56:00+00:00",
-              "overlap_end": "2026-04-03T01:35:00+00:00"
-            }
-          ],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "03 Apr 2026",
           "status": 400,
           "incidents": [
@@ -89,7 +73,7 @@
               "name": "Delay in displaying events in the Workflow Instance Details",
               "status": 400,
               "datetime_open": "2026-04-02T17:56:00+00:00",
-              "overlap_start": "2026-04-02T17:56:00+00:00",
+              "overlap_start": "2026-04-03T00:00:00+00:00",
               "overlap_end": "2026-04-03T01:35:00+00:00"
             }
           ],
@@ -747,22 +731,29 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
-      "uptime_percentage": 93.3
+      "uptime_percentage": 94.4
     },
     {
       "id": "59f90b7550230b4d0f0a5305",
       "name": "Nintex DocGen API",
-      "status": "Operational",
-      "status_code": 100,
+      "status": "Planned Maintenance",
+      "status_code": 200,
       "containers": [
         {
           "id": "56692802162d054731000015",
           "name": "Europe",
-          "updated": "2026-03-24T14:41:12.149Z",
-          "status": "Operational",
-          "status_code": 100
+          "updated": "2026-06-30T23:01:43.384Z",
+          "status": "Planned Maintenance",
+          "status_code": 200
         },
         {
           "id": "566925105401bb333d000023",
@@ -781,20 +772,13 @@
         {
           "id": "62cd1b9d1286ff0538c21f48",
           "name": "United Kingdom",
-          "updated": "2026-03-24T14:41:12.151Z",
-          "status": "Operational",
-          "status_code": 100
+          "updated": "2026-06-30T23:01:43.383Z",
+          "status": "Planned Maintenance",
+          "status_code": 200
         }
       ],
-      "updated": "2026-05-04T19:45:14.049Z",
+      "updated": "2026-06-30T23:01:43.384Z",
       "days": [
-        {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "03 Apr 2026",
           "status": 100,
@@ -1444,6 +1428,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 96.7
@@ -1464,13 +1455,6 @@
       ],
       "updated": "2026-03-24T14:41:12.112Z",
       "days": [
-        {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "03 Apr 2026",
           "status": 100,
@@ -2093,6 +2077,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 100.0
@@ -2127,13 +2118,6 @@
       ],
       "updated": "2026-05-22T03:32:52.964Z",
       "days": [
-        {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "03 Apr 2026",
           "status": 100,
@@ -2774,6 +2758,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 97.8
@@ -2802,13 +2793,6 @@
       "updated": "2025-07-29T22:12:31.638Z",
       "days": [
         {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "03 Apr 2026",
           "status": 100,
           "incidents": [],
@@ -3426,6 +3410,13 @@
         },
         {
           "date": "30 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -3451,13 +3442,6 @@
       "updated": "2025-04-18T01:12:27.981Z",
       "days": [
         {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "03 Apr 2026",
           "status": 100,
           "incidents": [],
@@ -4075,6 +4059,13 @@
         },
         {
           "date": "30 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -4121,13 +4112,6 @@
       "updated": "2026-05-07T00:33:44.124Z",
       "days": [
         {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "03 Apr 2026",
           "status": 100,
           "incidents": [],
@@ -4745,6 +4729,13 @@
         },
         {
           "date": "30 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -4770,13 +4761,6 @@
       "updated": "2025-07-21T01:07:02.757Z",
       "days": [
         {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "03 Apr 2026",
           "status": 100,
           "incidents": [],
@@ -5394,6 +5378,13 @@
         },
         {
           "date": "30 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -5468,13 +5459,6 @@
       "updated": "2025-10-30T02:45:40.916Z",
       "days": [
         {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "03 Apr 2026",
           "status": 100,
           "incidents": [],
@@ -6096,6 +6080,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 100.0
@@ -6116,13 +6107,6 @@
       ],
       "updated": "2026-05-13T20:32:04.631Z",
       "days": [
-        {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "03 Apr 2026",
           "status": 100,
@@ -6754,6 +6738,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 98.9
@@ -6774,13 +6765,6 @@
       ],
       "updated": "2023-12-20T02:48:18.007Z",
       "days": [
-        {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "03 Apr 2026",
           "status": 100,
@@ -7403,6 +7387,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 100.0
@@ -7410,8 +7401,8 @@
     {
       "id": "5beb9d68789f5d04bfff35bb",
       "name": "Nintex Process Manager - Production",
-      "status": "Service Disruption",
-      "status_code": 500,
+      "status": "Operational",
+      "status_code": 100,
       "containers": [
         {
           "id": "56692802162d054731000015",
@@ -7444,20 +7435,13 @@
         {
           "id": "61a584557e9a82053ce727fd",
           "name": "United Arab Emirates",
-          "updated": "2026-06-30T08:25:34.911Z",
-          "status": "Service Disruption",
-          "status_code": 500
+          "updated": "2026-06-30T10:29:50.813Z",
+          "status": "Operational",
+          "status_code": 100
         }
       ],
-      "updated": "2026-06-30T08:25:34.911Z",
+      "updated": "2026-06-30T10:29:50.813Z",
       "days": [
-        {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "03 Apr 2026",
           "status": 100,
@@ -8076,6 +8060,13 @@
         },
         {
           "date": "30 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -8101,13 +8092,6 @@
       "updated": "2026-05-28T23:09:08.409Z",
       "days": [
         {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "03 Apr 2026",
           "status": 100,
           "incidents": [],
@@ -8725,6 +8709,13 @@
         },
         {
           "date": "30 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -8750,13 +8741,6 @@
       "updated": "2025-10-30T00:57:58.179Z",
       "days": [
         {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "03 Apr 2026",
           "status": 100,
           "incidents": [],
@@ -9374,6 +9358,13 @@
         },
         {
           "date": "30 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -9413,13 +9404,6 @@
       "updated": "2025-10-30T00:57:58.359Z",
       "days": [
         {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "03 Apr 2026",
           "status": 100,
           "incidents": [],
@@ -10037,6 +10021,13 @@
         },
         {
           "date": "30 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -10062,13 +10053,6 @@
       "updated": "2025-03-05T05:26:55.683Z",
       "days": [
         {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "03 Apr 2026",
           "status": 100,
           "incidents": [],
@@ -10690,6 +10674,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 100.0
@@ -10710,13 +10701,6 @@
       ],
       "updated": "2026-04-21T22:24:11.170Z",
       "days": [
-        {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "03 Apr 2026",
           "status": 100,
@@ -11348,6 +11332,13 @@
           "incidents": [],
           "maintenances": [],
           "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
         }
       ],
       "uptime_percentage": 98.9
@@ -11368,13 +11359,6 @@
       ],
       "updated": "2021-04-20T22:29:14.708Z",
       "days": [
-        {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
         {
           "date": "03 Apr 2026",
           "status": 100,
@@ -11993,6 +11977,13 @@
         },
         {
           "date": "30 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -12039,13 +12030,6 @@
       "updated": "2026-05-21T12:00:17.167Z",
       "days": [
         {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "03 Apr 2026",
           "status": 100,
           "incidents": [],
@@ -12663,6 +12647,13 @@
         },
         {
           "date": "30 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -12709,13 +12700,6 @@
       "updated": "2024-01-10T06:14:24.525Z",
       "days": [
         {
-          "date": "02 Apr 2026",
-          "status": 100,
-          "incidents": [],
-          "maintenances": [],
-          "related_incidents": []
-        },
-        {
           "date": "03 Apr 2026",
           "status": 100,
           "incidents": [],
@@ -13333,6 +13317,13 @@
         },
         {
           "date": "30 Jun 2026",
+          "status": 100,
+          "incidents": [],
+          "maintenances": [],
+          "related_incidents": []
+        },
+        {
+          "date": "01 Jul 2026",
           "status": 100,
           "incidents": [],
           "maintenances": [],
@@ -13925,7 +13916,45 @@
     }
   ],
   "maintenance": {
-    "active": [],
+    "active": [
+      {
+        "_id": "6a42fa8376286d0608722f9b",
+        "datetime_planned_end": "2026-07-01T03:00:00.000Z",
+        "datetime_planned_start": "2026-06-30T23:00:00.000Z",
+        "name": "DocGen API Maintenance Window (UK and EU)",
+        "datetime_open": "2026-06-29T23:06:43.039Z",
+        "messages": [
+          {
+            "details": "DocGen API (DocGen for Workflow) in the UK and EU regions will undergo maintenance during the specified window.\r\n\r\nCustomers may experience elevated error rates and connection resets during this period.",
+            "state": 100,
+            "status": 200,
+            "datetime": "2026-06-29T23:06:43.077Z"
+          },
+          {
+            "details": "Maintenance is starting.",
+            "state": 200,
+            "status": 200,
+            "datetime": "2026-06-30T23:01:43.284Z"
+          }
+        ],
+        "containers_affected": [
+          {
+            "_id": "56692802162d054731000015",
+            "name": "Europe"
+          },
+          {
+            "_id": "62cd1b9d1286ff0538c21f48",
+            "name": "United Kingdom"
+          }
+        ],
+        "components_affected": [
+          {
+            "_id": "59f90b7550230b4d0f0a5305",
+            "name": "Nintex DocGen API"
+          }
+        ]
+      }
+    ],
     "upcoming": [
       {
         "_id": "6a3ca6cc7cb0d851499f5d93",
@@ -13977,37 +14006,6 @@
         ]
       },
       {
-        "_id": "6a42fa8376286d0608722f9b",
-        "datetime_planned_end": "2026-07-01T03:00:00.000Z",
-        "datetime_planned_start": "2026-06-30T23:00:00.000Z",
-        "name": "DocGen API Maintenance Window (UK and EU)",
-        "datetime_open": "2026-06-29T23:06:43.039Z",
-        "messages": [
-          {
-            "details": "DocGen API (DocGen for Workflow) in the UK and EU regions will undergo maintenance during the specified window.\r\n\r\nCustomers may experience elevated error rates and connection resets during this period.",
-            "state": 100,
-            "status": 200,
-            "datetime": "2026-06-29T23:06:43.077Z"
-          }
-        ],
-        "containers_affected": [
-          {
-            "_id": "56692802162d054731000015",
-            "name": "Europe"
-          },
-          {
-            "_id": "62cd1b9d1286ff0538c21f48",
-            "name": "United Kingdom"
-          }
-        ],
-        "components_affected": [
-          {
-            "_id": "59f90b7550230b4d0f0a5305",
-            "name": "Nintex DocGen API"
-          }
-        ]
-      },
-      {
         "_id": "6a42fae2d2133f5159beffcf",
         "datetime_planned_end": "2026-07-01T07:00:00.000Z",
         "datetime_planned_start": "2026-07-01T03:00:00.000Z",
@@ -14039,5 +14037,42 @@
         ]
       }
     ]
+  },
+  "diagnostics": {
+    "schema_version": 1,
+    "incident_processing": {
+      "total_incidents": 16,
+      "matched_incidents": 15,
+      "skipped_no_components": 1,
+      "skipped_unmatched_components": 0,
+      "skipped_no_timeline": 0,
+      "samples": {
+        "matched": [
+          "6a3e277f8614df05b0373605",
+          "6a0f83d650c7630597c4d624",
+          "6a0e75a69588e1056c38992c",
+          "6a0526d20c2f7e375074556f",
+          "6a0284331cc37505204a4a22",
+          "6a01939254fd6005141db578",
+          "69f8d48e54fd6005141db158",
+          "69f236c044970a0506e59c9e",
+          "69ea6144a8084305a8a9abc7",
+          "69e7c8f0a4603705eca31bc0"
+        ],
+        "skipped_no_components": [
+          "69cf3dc4ea54e6057d663843"
+        ],
+        "skipped_unmatched_components": [],
+        "skipped_no_timeline": []
+      }
+    },
+    "scrape_warnings": [
+      {
+        "incident_id": "69cf3dc4ea54e6057d663843",
+        "type": "missing_components",
+        "url": "https://status.nintex.com/pages/incident/566925105401bb333d000014/69cf3dc4ea54e6057d663843"
+      }
+    ],
+    "unknown_status_texts": []
   }
 }

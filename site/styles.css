@@ -525,8 +525,29 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 16px;
+}
+
+.hero-panel-header h3 {
+  margin: 0;
+}
+
+.diagnostics-notice {
+  display: inline-flex;
+  align-items: center;
+  flex-basis: 100%;
+  width: fit-content;
+  max-width: 100%;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(217, 119, 6, 0.28);
+  background: rgba(217, 119, 6, 0.09);
+  color: #8a4a00;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 .hero-panel h3 {

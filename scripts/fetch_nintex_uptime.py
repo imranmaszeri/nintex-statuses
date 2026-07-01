@@ -24,6 +24,38 @@ STATUS_TEXT_TO_CODE = {
 STATE_CODES = {100: "INVESTIGATING", 200: "IDENTIFIED", 300: "MONITORING", 400: "RESOLVED"}
 
 
+def normalise_component_name(name):
+    if not name:
+        return ""
+    return " ".join(str(name).split()).strip().lower()
+
+
+def push_sample(items, value, max_items=10):
+    if value and value not in items and len(items) < max_items:
+        items.append(value)
+
+
+def make_diagnostics():
+    return {
+        "schema_version": 1,
+        "incident_processing": {
+            "total_incidents": 0,
+            "matched_incidents": 0,
+            "skipped_no_components": 0,
+            "skipped_unmatched_components": 0,
+            "skipped_no_timeline": 0,
+            "samples": {
+                "matched": [],
+                "skipped_no_components": [],
+                "skipped_unmatched_components": [],
+                "skipped_no_timeline": [],
+            },
+        },
+        "scrape_warnings": [],
+        "unknown_status_texts": [],
+    }
+
+
 def parse_incident_datetime(s):
     if not s:
         return None
@@ -39,7 +71,7 @@ def parse_incident_datetime(s):
     return None
 
 
-def fetch_incident_detail(incident_id):
+def fetch_incident_detail(incident_id, diagnostics=None):
     url = f"{BASE}/pages/incident/{PAGE_ID}/{incident_id}"
     resp = requests.get(url, headers=HEADERS, timeout=15)
     resp.raise_for_status()
@@ -86,6 +118,8 @@ def fetch_incident_detail(incident_id):
             if span and span.get("data-original-title"):
                 status_text = span["data-original-title"]
                 status_code = STATUS_TEXT_TO_CODE.get(status_text, 100)
+                if diagnostics is not None and status_text not in STATUS_TEXT_TO_CODE:
+                    push_sample(diagnostics["unknown_status_texts"], status_text)
             full_text = status_el.get_text(" ", strip=True)
             if span:
                 full_text = full_text.replace(span.get_text("", strip=True), "", 1)
@@ -102,6 +136,20 @@ def fetch_incident_detail(incident_id):
             "details": details,
         })
 
+    if diagnostics is not None:
+        if not components_affected:
+            diagnostics["scrape_warnings"].append({
+                "incident_id": incident_id,
+                "type": "missing_components",
+                "url": f"{BASE}/pages/incident/{PAGE_ID}/{incident_id}",
+            })
+        if not timeline:
+            diagnostics["scrape_warnings"].append({
+                "incident_id": incident_id,
+                "type": "missing_timeline",
+                "url": f"{BASE}/pages/incident/{PAGE_ID}/{incident_id}",
+            })
+
     return {
         "id": incident_id,
         "title": title,
@@ -112,7 +160,7 @@ def fetch_incident_detail(incident_id):
     }
 
 
-def scrape_historical_incidents(skip_ids):
+def scrape_historical_incidents(skip_ids, diagnostics=None):
     url = f"{BASE}/pages/history/{PAGE_ID}"
     resp = requests.get(url, headers=HEADERS, timeout=15)
     resp.raise_for_status()
@@ -130,11 +178,18 @@ def scrape_historical_incidents(skip_ids):
     incidents = []
     for iid in incident_ids:
         try:
-            detail = fetch_incident_detail(iid)
+            detail = fetch_incident_detail(iid, diagnostics=diagnostics)
             incidents.append(detail)
             time.sleep(0.3)
         except Exception as e:
             print(f"  Warning: failed to fetch incident {iid}: {e}")
+            if diagnostics is not None:
+                diagnostics["scrape_warnings"].append({
+                    "incident_id": iid,
+                    "type": "fetch_error",
+                    "details": str(e),
+                    "url": f"{BASE}/pages/incident/{PAGE_ID}/{iid}",
+                })
 
     return incidents
 
@@ -164,21 +219,38 @@ def normalise_incident(api_incident):
     }
 
 
-def compute_component_days(components, all_incidents, days=DAYS):
+def compute_component_days(components, all_incidents, diagnostics, days=DAYS):
     name_to_idx = {}
     for i, c in enumerate(components):
-        name_to_idx[c["name"].lower().strip()] = i
+        name_to_idx[normalise_component_name(c["name"])] = i
 
     comp_data = {i: {} for i in range(len(components))}
+    incident_by_id = {x["id"]: x for x in all_incidents if x.get("id")}
 
     now = datetime.now(timezone.utc)
     end_date = now.replace(hour=23, minute=59, second=59, microsecond=0)
     start_date = (end_date - timedelta(days=days - 1)).replace(hour=0, minute=0, second=0, microsecond=0)
 
+    incident_stats = diagnostics["incident_processing"]
+    incident_stats["total_incidents"] = len(all_incidents)
+
     for incident in all_incidents:
         inc_comps = incident.get("components", [])
-        affected = [name_to_idx[n.lower().strip()] for n in inc_comps if n.lower().strip() in name_to_idx]
+
+        if not inc_comps:
+            incident_stats["skipped_no_components"] += 1
+            push_sample(incident_stats["samples"]["skipped_no_components"], incident.get("id"))
+            continue
+
+        affected = []
+        for name in inc_comps:
+            idx = name_to_idx.get(normalise_component_name(name))
+            if idx is not None and idx not in affected:
+                affected.append(idx)
+
         if not affected:
+            incident_stats["skipped_unmatched_components"] += 1
+            push_sample(incident_stats["samples"]["skipped_unmatched_components"], incident.get("id"))
             continue
 
         entries = []
@@ -188,7 +260,12 @@ def compute_component_days(components, all_incidents, days=DAYS):
                 continue
             entries.append({"dt": dt.astimezone(timezone.utc), "status": msg.get("status_code", 100), "state": msg.get("state", "").upper()})
         if not entries:
+            incident_stats["skipped_no_timeline"] += 1
+            push_sample(incident_stats["samples"]["skipped_no_timeline"], incident.get("id"))
             continue
+
+        incident_stats["matched_incidents"] += 1
+        push_sample(incident_stats["samples"]["matched"], incident.get("id"))
 
         entries.sort(key=lambda e: e["dt"])
 
@@ -239,7 +316,7 @@ def compute_component_days(components, all_incidents, days=DAYS):
 
             day_incidents = []
             for iid, overlap in dd.get("incidents", {}).items():
-                inc = next((x for x in all_incidents if x["id"] == iid), None)
+                inc = incident_by_id.get(iid)
                 if inc:
                     tl = inc.get("timeline", [])
                     first_dt = tl[0]["datetime"] if tl else None
@@ -279,6 +356,7 @@ def fetch():
     data = resp.json()["result"]
 
     components = data.get("status", [])
+    diagnostics = make_diagnostics()
 
     # Normalise active incidents from API
     active_ids = set()
@@ -291,15 +369,16 @@ def fetch():
 
     # Scrape historical incidents from detail pages
     try:
-        historical_incidents = scrape_historical_incidents(skip_ids=active_ids)
+        historical_incidents = scrape_historical_incidents(skip_ids=active_ids, diagnostics=diagnostics)
     except Exception as e:
         print(f"Failed to fetch historical incidents: {e}")
+        diagnostics["scrape_warnings"].append({"type": "history_page_fetch_error", "details": str(e)})
         historical_incidents = []
 
     all_incidents = active_incidents + historical_incidents
 
     # Compute 90-day daily status per component
-    components = compute_component_days(components, all_incidents)
+    components = compute_component_days(components, all_incidents, diagnostics)
 
     result = {
         "fetched_at": datetime.now(timezone.utc).isoformat(),
@@ -307,6 +386,7 @@ def fetch():
         "components": components,
         "incidents": all_incidents,
         "maintenance": data.get("maintenance", {}),
+        "diagnostics": diagnostics,
     }
 
     with open("data/nintex-uptime.json", "w") as f:
@@ -317,6 +397,9 @@ def fetch():
     print(f"  Active incidents: {len(active_incidents)}")
     print(f"  Historical incidents: {len(historical_incidents)}")
     print(f"  Total incidents: {len(all_incidents)}")
+    print(f"  Matched incidents: {diagnostics['incident_processing']['matched_incidents']}")
+    print(f"  Skipped incidents (no components): {diagnostics['incident_processing']['skipped_no_components']}")
+    print(f"  Skipped incidents (unmatched components): {diagnostics['incident_processing']['skipped_unmatched_components']}")
 
 
 if __name__ == "__main__":

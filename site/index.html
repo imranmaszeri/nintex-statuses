@@ -36,6 +36,7 @@
               <span class="divider" aria-hidden="true"></span>
               <span class="status-meta-item" id="incidentCount">0 incidents in last 90 days</span>
             </div>
+            <div class="diagnostics-notice" id="diagnosticsNotice" hidden role="status" aria-live="polite"></div>
           </div>
           <div class="uptime-row">
             <div class="uptime-label">
@@ -122,10 +123,10 @@
           Status.io API. Data is fetched daily and committed to this repository automatically.
         </p>
         <p class="about-body">
-          Unlike Atom-feed-based trackers, Status.io exposes a per-component 90-day uptime endpoint
-          that provides structured daily status and incident data — no historical replay or feed parsing
-          required. Incident intervals are used to compute minute-level downtime, deduplicating
-          cross-component overlaps for the platform-wide uptime figure.
+          Current component and maintenance status comes from the public Status.io endpoint, while
+          historical incident details are collected from the status page history and incident detail pages.
+          Incident intervals are used to compute minute-level downtime, deduplicating cross-component
+          overlaps for the platform-wide uptime figure.
         </p>
         <div class="about-nerd">
           <p class="about-body">
