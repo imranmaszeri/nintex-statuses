@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-07-01T02:20:23.476052+00:00",
+  "fetched_at": "2026-07-01T08:49:06.810250+00:00",
   "status_overall": {
-    "updated": "2026-06-30T23:01:43.387Z",
-    "status": "Planned Maintenance",
-    "status_code": 200
+    "updated": "2026-07-01T04:58:57.939Z",
+    "status": "Operational",
+    "status_code": 100
   },
   "components": [
     {
@@ -745,39 +745,39 @@
     {
       "id": "59f90b7550230b4d0f0a5305",
       "name": "Nintex DocGen API",
-      "status": "Planned Maintenance",
-      "status_code": 200,
+      "status": "Operational",
+      "status_code": 100,
       "containers": [
         {
           "id": "56692802162d054731000015",
           "name": "Europe",
-          "updated": "2026-06-30T23:01:43.384Z",
-          "status": "Planned Maintenance",
-          "status_code": 200
+          "updated": "2026-07-01T02:28:02.796Z",
+          "status": "Operational",
+          "status_code": 100
         },
         {
           "id": "566925105401bb333d000023",
           "name": "United States",
-          "updated": "2026-05-04T19:45:14.049Z",
+          "updated": "2026-07-01T03:52:14.178Z",
           "status": "Operational",
           "status_code": 100
         },
         {
           "id": "5beb9d4c7b7d7a04b9eea141",
           "name": "Canada",
-          "updated": "2026-05-04T19:45:14.045Z",
+          "updated": "2026-07-01T03:52:14.179Z",
           "status": "Operational",
           "status_code": 100
         },
         {
           "id": "62cd1b9d1286ff0538c21f48",
           "name": "United Kingdom",
-          "updated": "2026-06-30T23:01:43.383Z",
-          "status": "Planned Maintenance",
-          "status_code": 200
+          "updated": "2026-07-01T02:28:02.795Z",
+          "status": "Operational",
+          "status_code": 100
         }
       ],
-      "updated": "2026-06-30T23:01:43.384Z",
+      "updated": "2026-07-01T03:52:14.179Z",
       "days": [
         {
           "date": "03 Apr 2026",
@@ -8084,12 +8084,12 @@
         {
           "id": "566925105401bb333d000023",
           "name": "United States",
-          "updated": "2026-05-28T23:09:08.409Z",
+          "updated": "2026-07-01T04:58:57.936Z",
           "status": "Operational",
           "status_code": 100
         }
       ],
-      "updated": "2026-05-28T23:09:08.409Z",
+      "updated": "2026-07-01T04:58:57.936Z",
       "days": [
         {
           "date": "03 Apr 2026",
@@ -13886,75 +13886,10 @@
           "details": "This incident has been resolved and all services are operational."
         }
       ]
-    },
-    {
-      "id": "69c9ddcb5bad68057cb74249",
-      "title": "Nintex Workflow - Issue with AI Xtension Builder",
-      "url": "https://status.nintex.com/pages/incident/566925105401bb333d000014/69c9ddcb5bad68057cb74249",
-      "components": [
-        "Nintex Automation Cloud"
-      ],
-      "locations": [
-        "United States"
-      ],
-      "timeline": [
-        {
-          "datetime": "2026-03-30T02:19:00+00:00",
-          "status_text": "Partial Service Disruption",
-          "status_code": 400,
-          "state": "IDENTIFIED",
-          "details": "Our monitoring has indicated that the AI Xtension Builder is currently unavailable. \r\n\r\nOur team have identified the issue and in the process of remediating."
-        },
-        {
-          "datetime": "2026-03-30T07:24:00+00:00",
-          "status_text": "Operational",
-          "status_code": 100,
-          "state": "RESOLVED",
-          "details": "Our team has applied the remediation and the service is back to normal operation. The issue has been resolved."
-        }
-      ]
     }
   ],
   "maintenance": {
-    "active": [
-      {
-        "_id": "6a42fa8376286d0608722f9b",
-        "datetime_planned_end": "2026-07-01T03:00:00.000Z",
-        "datetime_planned_start": "2026-06-30T23:00:00.000Z",
-        "name": "DocGen API Maintenance Window (UK and EU)",
-        "datetime_open": "2026-06-29T23:06:43.039Z",
-        "messages": [
-          {
-            "details": "DocGen API (DocGen for Workflow) in the UK and EU regions will undergo maintenance during the specified window.\r\n\r\nCustomers may experience elevated error rates and connection resets during this period.",
-            "state": 100,
-            "status": 200,
-            "datetime": "2026-06-29T23:06:43.077Z"
-          },
-          {
-            "details": "Maintenance is starting.",
-            "state": 200,
-            "status": 200,
-            "datetime": "2026-06-30T23:01:43.284Z"
-          }
-        ],
-        "containers_affected": [
-          {
-            "_id": "56692802162d054731000015",
-            "name": "Europe"
-          },
-          {
-            "_id": "62cd1b9d1286ff0538c21f48",
-            "name": "United Kingdom"
-          }
-        ],
-        "components_affected": [
-          {
-            "_id": "59f90b7550230b4d0f0a5305",
-            "name": "Nintex DocGen API"
-          }
-        ]
-      }
-    ],
+    "active": [],
     "upcoming": [
       {
         "_id": "6a3ca6cc7cb0d851499f5d93",
@@ -14004,40 +13939,55 @@
             "name": "Nintex Automation Cloud"
           }
         ]
-      },
-      {
-        "_id": "6a42fae2d2133f5159beffcf",
-        "datetime_planned_end": "2026-07-01T07:00:00.000Z",
-        "datetime_planned_start": "2026-07-01T03:00:00.000Z",
-        "name": "DocGen API Maintenance Window (US and CA)",
-        "datetime_open": "2026-06-29T23:08:18.128Z",
-        "messages": [
-          {
-            "details": "DocGen API (DocGen for Workflow) in the US and CA regions will undergo maintenance during the specified window.\r\n\r\nCustomers may experience elevated error rates and connection resets during this period.",
-            "state": 100,
-            "status": 200,
-            "datetime": "2026-06-29T23:08:18.175Z"
-          }
-        ],
-        "containers_affected": [
-          {
-            "_id": "566925105401bb333d000023",
-            "name": "United States"
-          },
-          {
-            "_id": "5beb9d4c7b7d7a04b9eea141",
-            "name": "Canada"
-          }
-        ],
-        "components_affected": [
-          {
-            "_id": "59f90b7550230b4d0f0a5305",
-            "name": "Nintex DocGen API"
-          }
-        ]
       }
     ],
     "historical": [
+      {
+        "id": "6a42fae2d2133f5159beffcf",
+        "title": "DocGen API Maintenance Window (US and CA)",
+        "url": "https://status.nintex.com/pages/maintenance/566925105401bb333d000014/6a42fae2d2133f5159beffcf",
+        "components": [],
+        "locations": [],
+        "timeline": [
+          {
+            "datetime": "2026-07-01T02:58:00+00:00",
+            "status_text": "Under Maintenance",
+            "status_code": 200,
+            "state": "UPDATE",
+            "details": "Maintenance starting."
+          },
+          {
+            "datetime": "2026-07-01T03:52:00+00:00",
+            "status_text": "Under Maintenance",
+            "status_code": 200,
+            "state": "UPDATE",
+            "details": "Maintenance complete."
+          }
+        ]
+      },
+      {
+        "id": "6a42fa8376286d0608722f9b",
+        "title": "DocGen API Maintenance Window (UK and EU)",
+        "url": "https://status.nintex.com/pages/maintenance/566925105401bb333d000014/6a42fa8376286d0608722f9b",
+        "components": [],
+        "locations": [],
+        "timeline": [
+          {
+            "datetime": "2026-06-30T23:01:00+00:00",
+            "status_text": "Under Maintenance",
+            "status_code": 200,
+            "state": "UPDATE",
+            "details": "Maintenance is starting."
+          },
+          {
+            "datetime": "2026-07-01T02:28:00+00:00",
+            "status_text": "Under Maintenance",
+            "status_code": 200,
+            "state": "UPDATE",
+            "details": "Maintenance complete."
+          }
+        ]
+      },
       {
         "id": "6a194f7d0c9a320585c8429c",
         "title": "Nintex Workflow Service Maintenance",
@@ -14106,37 +14056,14 @@
             "details": "Scheduled maintenance is complete."
           }
         ]
-      },
-      {
-        "id": "69b30151589f55058e2fded0",
-        "title": "Nintex DocGen Services Maintenance",
-        "url": "https://status.nintex.com/pages/maintenance/566925105401bb333d000014/69b30151589f55058e2fded0",
-        "components": [],
-        "locations": [],
-        "timeline": [
-          {
-            "datetime": "2026-03-14T22:03:00+00:00",
-            "status_text": "Under Maintenance",
-            "status_code": 200,
-            "state": "UPDATE",
-            "details": "Maintenance starting."
-          },
-          {
-            "datetime": "2026-03-24T14:41:00+00:00",
-            "status_text": "Under Maintenance",
-            "status_code": 200,
-            "state": "UPDATE",
-            "details": "Maintenance concluded."
-          }
-        ]
       }
     ]
   },
   "diagnostics": {
     "schema_version": 1,
     "incident_processing": {
-      "total_incidents": 16,
-      "matched_incidents": 15,
+      "total_incidents": 15,
+      "matched_incidents": 14,
       "skipped_no_components": 1,
       "skipped_unmatched_components": 0,
       "skipped_no_timeline": 0,
