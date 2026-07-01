@@ -2,6 +2,7 @@ import json
 import time
 import requests
 from datetime import datetime, timezone, timedelta
+from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
 HEADERS = {
@@ -160,20 +161,124 @@ def fetch_incident_detail(incident_id, diagnostics=None):
     }
 
 
-def scrape_historical_incidents(skip_ids, diagnostics=None):
-    url = f"{BASE}/pages/history/{PAGE_ID}"
+def fetch_maintenance_detail(maintenance_id, diagnostics=None):
+    url = f"{BASE}/pages/maintenance/{PAGE_ID}/{maintenance_id}"
     resp = requests.get(url, headers=HEADERS, timeout=15)
     resp.raise_for_status()
 
     soup = BeautifulSoup(resp.text, "html.parser")
-    incident_ids = []
 
-    for h5 in soup.find_all("h5"):
-        link = h5.find("a")
-        if link and "pages/incident/" in link.get("href", ""):
-            iid = link["href"].split("/")[-1]
-            if iid not in incident_ids and iid not in skip_ids:
+    title_el = soup.select_one(".panel-title h5.white") or soup.select_one(".panel-title h5")
+    title = ""
+    if title_el:
+        for status_span in title_el.select("span"):
+            status_span.decompose()
+        title = title_el.get_text(" ", strip=True)
+
+    components_affected = []
+    locations_affected = []
+    for row in soup.select("#statusio_incident .row"):
+        label_el = row.select_one(".event_inner_title")
+        text_el = row.select_one(".event_inner_text")
+        if not label_el or not text_el:
+            continue
+        label = label_el.get_text(strip=True)
+        value = text_el.get_text(strip=True)
+        if label == "Components":
+            components_affected = [c.strip() for c in value.split(",") if c.strip()]
+        elif label == "Locations":
+            locations_affected = [l.strip() for l in value.split(",") if l.strip()]
+
+    timeline = []
+    for time_el in soup.select(".incident_time, .maintenance_time"):
+        dt = parse_incident_datetime(time_el.get_text(strip=True))
+        row_parent = time_el.find_parent(class_="row")
+        if not row_parent:
+            continue
+
+        state_text = "UPDATE"
+        status_el = row_parent.select_one(".incident_update_status strong")
+        if status_el:
+            full_text = status_el.get_text(" ", strip=True)
+            state_text = full_text.strip().split("\n")[0].strip() or "UPDATE"
+
+        details_el = row_parent.select_one(".incident_message_details")
+        details = details_el.get_text(" ", strip=True) if details_el else ""
+
+        timeline.append({
+            "datetime": dt.isoformat() if dt else time_el.get_text(strip=True),
+            "status_text": "Under Maintenance",
+            "status_code": 200,
+            "state": state_text,
+            "details": details,
+        })
+
+    if diagnostics is not None and not timeline:
+        diagnostics["scrape_warnings"].append({
+            "maintenance_id": maintenance_id,
+            "type": "missing_maintenance_timeline",
+            "url": url,
+        })
+
+    return {
+        "id": maintenance_id,
+        "title": title,
+        "url": url,
+        "components": components_affected,
+        "locations": locations_affected,
+        "timeline": timeline,
+    }
+
+
+def scrape_history_ids(skip_incident_ids, diagnostics=None, max_pages=1):
+    next_url = f"{BASE}/pages/history/{PAGE_ID}"
+    seen_pages = set()
+    incident_ids = []
+    maintenance_ids = []
+
+    for _ in range(max_pages):
+        if not next_url or next_url in seen_pages:
+            break
+        seen_pages.add(next_url)
+
+        resp = requests.get(next_url, headers=HEADERS, timeout=15)
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, "html.parser")
+
+        for link in soup.select('a[href*="/pages/incident/"]'):
+            href = link.get("href", "")
+            if f"/pages/incident/{PAGE_ID}/" not in href:
+                continue
+            iid = href.rstrip("/").split("/")[-1]
+            if iid and iid not in skip_incident_ids and iid not in incident_ids:
                 incident_ids.append(iid)
+
+        for link in soup.select('a[href*="/pages/maintenance/"]'):
+            href = link.get("href", "")
+            if f"/pages/maintenance/{PAGE_ID}/" not in href:
+                continue
+            mid = href.rstrip("/").split("/")[-1]
+            if mid and mid not in maintenance_ids:
+                maintenance_ids.append(mid)
+
+        next_link = None
+        for link in soup.select("a[href]"):
+            if "next page" in link.get_text(" ", strip=True).lower():
+                next_link = link
+                break
+
+        next_url = urljoin(BASE, next_link["href"]) if next_link and next_link.get("href") else None
+
+    if diagnostics is not None and next_url:
+        diagnostics["scrape_warnings"].append({
+            "type": "history_page_limit_reached",
+            "details": f"Reached pagination limit of {max_pages} pages",
+        })
+
+    return incident_ids, maintenance_ids
+
+
+def scrape_historical_incidents(incident_ids, diagnostics=None):
 
     incidents = []
     for iid in incident_ids:
@@ -192,6 +297,27 @@ def scrape_historical_incidents(skip_ids, diagnostics=None):
                 })
 
     return incidents
+
+
+def scrape_historical_maintenances(maintenance_ids, diagnostics=None):
+    maintenances = []
+
+    for mid in maintenance_ids:
+        try:
+            detail = fetch_maintenance_detail(mid, diagnostics=diagnostics)
+            maintenances.append(detail)
+            time.sleep(0.2)
+        except Exception as e:
+            print(f"  Warning: failed to fetch maintenance {mid}: {e}")
+            if diagnostics is not None:
+                diagnostics["scrape_warnings"].append({
+                    "maintenance_id": mid,
+                    "type": "maintenance_fetch_error",
+                    "details": str(e),
+                    "url": f"{BASE}/pages/maintenance/{PAGE_ID}/{mid}",
+                })
+
+    return maintenances
 
 
 def normalise_incident(api_incident):
@@ -367,13 +493,18 @@ def fetch():
             active_ids.add(inc["id"])
             active_incidents.append(inc)
 
-    # Scrape historical incidents from detail pages
     try:
-        historical_incidents = scrape_historical_incidents(skip_ids=active_ids, diagnostics=diagnostics)
+        incident_ids, maintenance_ids = scrape_history_ids(skip_incident_ids=active_ids, diagnostics=diagnostics, max_pages=1)
     except Exception as e:
-        print(f"Failed to fetch historical incidents: {e}")
+        print(f"Failed to fetch history page: {e}")
         diagnostics["scrape_warnings"].append({"type": "history_page_fetch_error", "details": str(e)})
-        historical_incidents = []
+        incident_ids, maintenance_ids = [], []
+
+    # Scrape historical incidents from detail pages
+    historical_incidents = scrape_historical_incidents(incident_ids=incident_ids, diagnostics=diagnostics)
+
+    # Scrape historical maintenances from detail pages
+    historical_maintenances = scrape_historical_maintenances(maintenance_ids=maintenance_ids, diagnostics=diagnostics)
 
     all_incidents = active_incidents + historical_incidents
 
@@ -385,7 +516,10 @@ def fetch():
         "status_overall": data.get("status_overall"),
         "components": components,
         "incidents": all_incidents,
-        "maintenance": data.get("maintenance", {}),
+        "maintenance": {
+            **data.get("maintenance", {}),
+            "historical": historical_maintenances,
+        },
         "diagnostics": diagnostics,
     }
 
@@ -396,6 +530,7 @@ def fetch():
     print(f"  Components: {len(result['components'])}")
     print(f"  Active incidents: {len(active_incidents)}")
     print(f"  Historical incidents: {len(historical_incidents)}")
+    print(f"  Historical maintenances: {len(historical_maintenances)}")
     print(f"  Total incidents: {len(all_incidents)}")
     print(f"  Matched incidents: {diagnostics['incident_processing']['matched_incidents']}")
     print(f"  Skipped incidents (no components): {diagnostics['incident_processing']['skipped_no_components']}")

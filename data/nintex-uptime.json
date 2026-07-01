@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-07-01T01:20:49.173486+00:00",
+  "fetched_at": "2026-07-01T02:20:23.476052+00:00",
   "status_overall": {
     "updated": "2026-06-30T23:01:43.387Z",
     "status": "Planned Maintenance",
@@ -14036,6 +14036,100 @@
           }
         ]
       }
+    ],
+    "historical": [
+      {
+        "id": "6a194f7d0c9a320585c8429c",
+        "title": "Nintex Workflow Service Maintenance",
+        "url": "https://status.nintex.com/pages/maintenance/566925105401bb333d000014/6a194f7d0c9a320585c8429c",
+        "components": [],
+        "locations": [],
+        "timeline": [
+          {
+            "datetime": "2026-06-04T02:52:00+00:00",
+            "status_text": "Under Maintenance",
+            "status_code": 200,
+            "state": "UPDATE",
+            "details": "Scheduled Maintenance Notification from Nintex Services"
+          },
+          {
+            "datetime": "2026-06-04T02:53:00+00:00",
+            "status_text": "Under Maintenance",
+            "status_code": 200,
+            "state": "UPDATE",
+            "details": "Completed"
+          }
+        ]
+      },
+      {
+        "id": "6a0d79cca6a521058e188b01",
+        "title": "Nintex Workflow Service Maintenance",
+        "url": "https://status.nintex.com/pages/maintenance/566925105401bb333d000014/6a0d79cca6a521058e188b01",
+        "components": [],
+        "locations": [],
+        "timeline": [
+          {
+            "datetime": "2026-05-25T02:05:00+00:00",
+            "status_text": "Under Maintenance",
+            "status_code": 200,
+            "state": "UPDATE",
+            "details": "Scheduled maintenance is starting."
+          },
+          {
+            "datetime": "2026-05-28T07:35:00+00:00",
+            "status_text": "Under Maintenance",
+            "status_code": 200,
+            "state": "UPDATE",
+            "details": "Scheduled maintenance is complete."
+          }
+        ]
+      },
+      {
+        "id": "6a07160dabd40c3a6f355728",
+        "title": "Nintex K2 Cloud service maintenance",
+        "url": "https://status.nintex.com/pages/maintenance/566925105401bb333d000014/6a07160dabd40c3a6f355728",
+        "components": [],
+        "locations": [],
+        "timeline": [
+          {
+            "datetime": "2026-05-20T10:00:00+00:00",
+            "status_text": "Under Maintenance",
+            "status_code": 200,
+            "state": "UPDATE",
+            "details": "Scheduled maintenance is starting."
+          },
+          {
+            "datetime": "2026-05-21T12:00:00+00:00",
+            "status_text": "Under Maintenance",
+            "status_code": 200,
+            "state": "UPDATE",
+            "details": "Scheduled maintenance is complete."
+          }
+        ]
+      },
+      {
+        "id": "69b30151589f55058e2fded0",
+        "title": "Nintex DocGen Services Maintenance",
+        "url": "https://status.nintex.com/pages/maintenance/566925105401bb333d000014/69b30151589f55058e2fded0",
+        "components": [],
+        "locations": [],
+        "timeline": [
+          {
+            "datetime": "2026-03-14T22:03:00+00:00",
+            "status_text": "Under Maintenance",
+            "status_code": 200,
+            "state": "UPDATE",
+            "details": "Maintenance starting."
+          },
+          {
+            "datetime": "2026-03-24T14:41:00+00:00",
+            "status_text": "Under Maintenance",
+            "status_code": 200,
+            "state": "UPDATE",
+            "details": "Maintenance concluded."
+          }
+        ]
+      }
     ]
   },
   "diagnostics": {
@@ -14067,6 +14161,10 @@
       }
     },
     "scrape_warnings": [
+      {
+        "type": "history_page_limit_reached",
+        "details": "Reached pagination limit of 1 pages"
+      },
       {
         "incident_id": "69cf3dc4ea54e6057d663843",
         "type": "missing_components",

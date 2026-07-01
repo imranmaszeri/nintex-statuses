@@ -1,6 +1,7 @@
 const DATA_URL = 'data/nintex-uptime.json';
 const PAGE_ID = '566925105401bb333d000014';
 const incidentUrl = (id) => `https://status.nintex.com/pages/incident/${PAGE_ID}/${id}`;
+const maintenanceUrl = (id) => `https://status.nintex.com/pages/maintenance/${PAGE_ID}/${id}`;
 
 const impactRank = {
   none: 0,
@@ -215,6 +216,25 @@ const incidentInterval = (incident) => {
   const durationMs = parseDurationMinutes(incident.duration) * 60 * 1000;
   if (open && durationMs > 0) return [open, new Date(open.getTime() + durationMs)];
   return null;
+};
+
+const firstTimelineDate = (item) => {
+  const timeline = Array.isArray(item?.timeline) ? item.timeline : [];
+  for (const entry of timeline) {
+    const dt = parseStatusIoDate(entry?.datetime);
+    if (dt) return dt;
+  }
+  return null;
+};
+
+const incidentImpactFromTimeline = (incident) => {
+  const timeline = Array.isArray(incident?.timeline) ? incident.timeline : [];
+  let highest = 100;
+  timeline.forEach((entry) => {
+    const code = Number(entry?.status_code ?? 100);
+    if (code > highest) highest = code;
+  });
+  return statusToImpact(highest);
 };
 
 const formatIncidentCount = (count) => `${count} incident${count === 1 ? '' : 's'}`;
@@ -1146,22 +1166,34 @@ const render = async () => {
   // Incident timeline — deduplicated, sorted by date descending
   const allIncidents = [];
   const seenTimeline = new Set();
-  components.forEach((component) => {
-    (component.days || []).forEach((day) => {
-      const impact = statusToImpact(day.status);
-      (day.incidents || []).forEach((incident) => {
-        const id = incident.id || incident.name;
-        if (!id || seenTimeline.has(id)) return;
-        seenTimeline.add(id);
-        allIncidents.push({
-          id,
-          title: incident.name || id,
-          impact,
-          datetime_open: incident.datetime_open,
-          duration: incident.duration,
-          url: incidentUrl(id),
-        });
-      });
+
+  (data.incidents || []).forEach((incident) => {
+    const id = incident.id || incident.title;
+    if (!id || seenTimeline.has(`i:${id}`)) return;
+    seenTimeline.add(`i:${id}`);
+    const opened = firstTimelineDate(incident);
+    allIncidents.push({
+      id,
+      title: incident.title || id,
+      impact: incidentImpactFromTimeline(incident),
+      datetime_open: opened ? opened.toISOString() : null,
+      duration: incident.duration,
+      url: incident.url || incidentUrl(id),
+    });
+  });
+
+  (data.maintenance?.historical || []).forEach((maintenance) => {
+    const id = maintenance.id || maintenance.title;
+    if (!id || seenTimeline.has(`m:${id}`)) return;
+    seenTimeline.add(`m:${id}`);
+    const opened = firstTimelineDate(maintenance);
+    allIncidents.push({
+      id,
+      title: maintenance.title || id,
+      impact: 'maintenance',
+      datetime_open: opened ? opened.toISOString() : null,
+      duration: maintenance.duration,
+      url: maintenance.url || maintenanceUrl(id),
     });
   });
 
